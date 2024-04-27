@@ -28,7 +28,7 @@ class TransformersClassifierHandler(BaseHandler, ABC):
         self.device = torch.device("cuda:" + str(properties.get("gpu_id")) if torch.cuda.is_available() else "cpu")
 
         # Read model serialize/pt file
-        self.model = BertForSequenceClassification.from_pretrained(model_dir)
+        self.model = AutoModelForSequenceClassification.from_pretrained(model_dir)
         self.tokenizer = AutoTokenizer.from_pretrained(model_dir)
 
         self.model.to(self.device)
@@ -72,17 +72,18 @@ class TransformersClassifierHandler(BaseHandler, ABC):
         # with "input_ids" and "token_type_ids" - which is true for some popular transformer models, e.g. bert.
         # If your transformer model expects different tokenization, adapt this code to suit
         # its expected input format.
+
         prediction = self.model(
             inputs['input_ids'].to(self.device),
             token_type_ids=inputs['token_type_ids'].to(self.device)
         )[0]
-        prediction = torch.nn.Softmax(dim=1)(prediction).tolist()
+        prediction = torch.sigmoid(prediction).cpu().detach().numpy()[0].dot([-1, 0, 1])
         logger.info("Model predicted: '%s'", prediction)
 
         #if self.mapping:
         #    prediction = self.mapping[str(prediction)]
 
-        return prediction
+        return [prediction]
 
     def postprocess(self, inference_output):
         return inference_output

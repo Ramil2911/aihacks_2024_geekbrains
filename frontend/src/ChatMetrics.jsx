@@ -7,17 +7,16 @@ const ChatMetrics = ({ chatId }) => {
 
   // Загрузка метрик чата при выборе чата
   useEffect(() => {
-    if (chatId) {
-      const fetchMetrics = async () => {
-        try {
-          const response = await fetch(`https://backend.example.com/chats/${chatId}/metrics`);
-          const data = await response.json();
-          setMetrics(data);
-        } catch (error) {
-          console.error('Ошибка при загрузке метрик чата:', error);
-        }
-      };
+    const fetchMetrics = async () => {
+      try {
+        const { data } = await api.getChatMetrics(chatId);
+        setMetrics(data);
+      } catch (error) {
+        console.error('Ошибка при загрузке метрик чата:', error);
+      }
+    };
 
+    if (chatId) {
       fetchMetrics();
     }
   }, [chatId]);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ChatList.css';
 import NewChatModal from './NewChatModal';
+import { api } from './api';
 
 const ChatList = ({ onSelectChat }) => {
   const [showModal, setShowModal] = useState(false);
@@ -10,8 +11,7 @@ const ChatList = ({ onSelectChat }) => {
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await fetch('https://example.com/api/chats');
-        const data = await response.json();
+        const {data} = await api.getChats()
         setChats(data);
       } catch (error) {
         console.error('Ошибка при загрузке чатов:', error);
@@ -34,14 +34,7 @@ const ChatList = ({ onSelectChat }) => {
   const handleAddChat = async (newChatName) => {
     try {
       // Отправляем запрос на бэкенд для добавления нового чата
-      const response = await fetch('https://example.com/api/chats', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: newChatName }),
-      });
-      const data = await response.json();
+      const { data } = await api.addChat(newChatName);
       if (data.success) {
         // Если чат успешно добавлен на сервере, обновляем список чатов
         setChats(prevChats => [...prevChats, { id: data.chatId, name: newChatName, isFavorite: false }]);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ChatWindow.css';
+import { api } from './api';
 
 const ChatWindow = ({ chatId, chatName }) => {
   const [message, setMessage] = useState('');
@@ -10,8 +11,7 @@ const ChatWindow = ({ chatId, chatName }) => {
     if (chatId) {
       const fetchMessages = async () => {
         try {
-          const response = await fetch(`https://backend.example.com/chats/${chatId}/messages`);
-          const data = await response.json();
+          const { data } = await api.getChatMessages(chatId);
           setChatMessages(data);
         } catch (error) {
           console.error('Ошибка при загрузке сообщений чата:', error);
@@ -27,13 +27,7 @@ const ChatWindow = ({ chatId, chatName }) => {
     try {
       if (message.trim() !== '') {
         // Отправляем сообщение на бэкенд
-        await fetch(`https://backend.example.com/chats/${chatId}/messages`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ text: message }),
-        });
+        await api.sendMessage(chatId, message);
         
         // Обновляем сообщения чата после отправки
         setChatMessages([...chatMessages, { text: message, fromServer: false }]);
