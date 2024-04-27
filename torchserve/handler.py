@@ -28,7 +28,7 @@ class TransformersClassifierHandler(BaseHandler, ABC):
         self.device = torch.device("cuda:" + str(properties.get("gpu_id")) if torch.cuda.is_available() else "cpu")
 
         # Read model serialize/pt file
-        self.model = AutoModelForSequenceClassification.from_pretrained(model_dir)
+        self.model = BertForSequenceClassification.from_pretrained(model_dir)
         self.tokenizer = AutoTokenizer.from_pretrained(model_dir)
 
         self.model.to(self.device)
@@ -76,7 +76,7 @@ class TransformersClassifierHandler(BaseHandler, ABC):
             inputs['input_ids'].to(self.device),
             token_type_ids=inputs['token_type_ids'].to(self.device)
         )[0]
-        prediction = torch.nn.Softmax(prediction).tolist()
+        prediction = torch.nn.Softmax(dim=1)(prediction).tolist()
         logger.info("Model predicted: '%s'", prediction)
 
         #if self.mapping:

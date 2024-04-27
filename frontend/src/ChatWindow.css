@@ -9,7 +9,7 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding-bottom: 5px;
-    height: calc(100vh - 20px); /* Высота окна чата */
+    height: calc(80vh - 20px); /* Высота окна чата */
     max-height: 800px; /* Максимальная высота окна чата */
     display: flex; /* Добавление флексбокса */
     flex-direction: column; /* Расположение дочерних элементов в столбце */

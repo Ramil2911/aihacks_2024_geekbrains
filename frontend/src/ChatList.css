@@ -1,7 +1,7 @@
 /* ChatList.css */
 .chati{
     display: flex;
-
+    align-items: center;
     gap: 20px;
 }
 
@@ -9,6 +9,11 @@
     background-color: #f0f0f0;
     border-radius: 10px;
     padding: 20px;
+    padding-top: 40px;
+    height: calc(80vh - 20px); /* Высота окна чата */
+    max-height: 800px; /* Максимальная высота окна чата */
+    display: flex; /* Добавление флексбокса */
+    flex-direction: column; /* Расположение дочерних элементов в столбце */
   }
   .novi{
     background-color: #007bff;
@@ -22,6 +27,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: 80%;
+    margin-bottom: 20px;
   }
   .novi:hover {
     background-color: #0056b3;
@@ -29,7 +35,6 @@
   h2 {
     color: #333;
     font-size: 24px;
-    margin-bottom: 20px;
   }
   
   .chat-item {
@@ -60,5 +65,6 @@
     margin-left: 50px;
     color: #ff0000;
     font-size: 14px;
+    margin-top: 0;
   }
   

@@ -9,7 +9,7 @@ const App = () => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [chatData, setChatData] = useState(null);
   
-  // Функция для загрузки данных о чатах
+  // Функция для загрузки данных о чатах 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -17,7 +17,7 @@ const App = () => {
         const data = await response.json();
         setChatData(data);
       } catch (error) {
-        console.error('Ошибка при загрузке данных о занятиях:', error);
+        console.error('Ошибка при загрузке данных о чатах:', error);
       }
     };
 

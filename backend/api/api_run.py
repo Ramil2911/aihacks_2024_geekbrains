@@ -16,19 +16,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = clickhouse_connect.get_client(host=CLICKHOUSE_CLOUD_HOSTNAME, port=8123, username=CLICKHOUSE_CLOUD_USER, password=CLICKHOUSE_CLOUD_PASSWORD)
+client = clickhouse_connect.get_client(host=CLICKHOUSE_CLOUD_HOSTNAME, port=8123, username=CLICKHOUSE_CLOUD_USER,
+                                       password=CLICKHOUSE_CLOUD_PASSWORD)
 
-client.execute('CREATE DATABASE IF NOT EXISTS chatbot')
-client.execute('CREATE TABLE IF NOT EXISTS chatbot.chat_history (conversation_id String, sender String, message String) ENGINE = MergeTree ORDER BY conversation_id')
+client.command('CREATE DATABASE IF NOT EXISTS chatbot')
+client.command(
+    'CREATE TABLE IF NOT EXISTS chatbot.chat_history (conversation_id int, sender String, message String) ENGINE = MergeTree ORDER BY conversation_id')
+client.command(
+    'CREATE TABLE IF NOT EXISTS chatbot.records (id int, sender String, message String, timestamp String, score int, positivity float, class String) ENGINE = MergeTree ORDER BY score')
+
 
 @app.post("/chatbot/{conversation_id}/{sender}")
-async def chatbot(conversation_id: str, sender: str, message: str):
+async def chatbot(conversation_id: int, message: str):
     response = get_ai_response(message)
     if response:
-        client.execute('INSERT INTO chatbot.chat_history (conversation_id, sender, message) VALUES', [(conversation_id, sender, message)])
+        client.insert('chatbot.chat_history', [(conversation_id, 'user', message), (conversation_id, 'bot', response)])
         return response
     else:
         return "Sorry, I'm having trouble generating a response right now. Please try again later."
+
 
 def get_ai_response(message):
     # Placeholder AI response generation logic
@@ -39,8 +45,31 @@ def get_ai_response(message):
     else:
         return "Placeholder AI response for message: " + message
 
+
 @app.get("/chat_history/{conversation_id}")
 async def get_chat_history(conversation_id: str):
-    result = client.execute('SELECT sender, message FROM chatbot.chat_history WHERE conversation_id = %s', (conversation_id,))
-    chat_history = [{"sender": row[0], "message": row[1]} for row in result]
+    result = client.query('SELECT sender, message FROM chatbot.chat_history WHERE conversation_id = {id:Int64}',
+                          parameters={"id": conversation_id})
+    chat_history = [{"sender": row[0], "message": row[1]} for row in result.result_rows]
     return chat_history
+
+
+@app.get("/chats")
+async def get_chats():
+    result = client.query("SELECT DISTINCT conversation_id from chatbot.chat_history")
+    return result.result_rows
+
+
+@app.post("https://backend.example.com/chats/{chatId}/messages")
+async def get_chat_messages(chatId: int):
+    pass
+
+
+@app.get("/chats/{chatId}/metrics")
+async def get_metrics(chatId: int):
+    pass
+
+
+@app.get("/chats/{chatId}/messages")
+async def get_messages(chatId: int):
+    pass
