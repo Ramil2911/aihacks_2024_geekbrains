@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+  torchserve:
+    build: ./torchserve
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+      - "8082:8082"
+    environment:
+      - TS_CONFIG_FILE=/home/model-server/config.properties
+  frontend:
+    build: ./frontend
+    ports:
+      - "8000:8000"

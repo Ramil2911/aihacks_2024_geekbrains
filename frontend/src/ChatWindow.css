@@ -1,0 +1,82 @@
+/* ChatWindow.css */
+
+.chat-window-container {
+    width: 500px; /* Ширина окна чата */
+    
+    max-width: 500px; /* Максимальная ширина окна чата */
+    margin: 0 auto; /* Центрирование по горизонтали */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding-bottom: 5px;
+    height: calc(100vh - 20px); /* Высота окна чата */
+    max-height: 800px; /* Максимальная высота окна чата */
+    display: flex; /* Добавление флексбокса */
+    flex-direction: column; /* Расположение дочерних элементов в столбце */
+}
+
+.chat-messages-container {
+    flex: 1; /* Основная часть окна чата занимает все доступное пространство по вертикали */
+    overflow-y: auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 70%; /* Ограничение ширины сообщения */
+    word-wrap: break-word; /* Перенос слов при нехватке места */
+    position: relative; /* Позиционирование для псевдоэлемента */
+    background-color: #007bff; /* Цвет фона для сообщения пользователя */
+    color: #fff; /* Цвет текста для сообщения пользователя */
+    align-self: flex-end; /* Выравнивание сообщений пользователя вправо */
+}
+.user-message {
+    background-color: #007bff;
+    color: #fff;
+    align-self: flex-end;
+
+}
+
+.server-message {
+    background-color: #ccc;
+    color: #000;
+    align-self: flex-start;
+}
+
+.message-input {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.message-input input {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.send-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background-image: url('assets/samolet.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70%;
+}
+
+.send-button:hover {
+    background-color: #0056b3;
+}

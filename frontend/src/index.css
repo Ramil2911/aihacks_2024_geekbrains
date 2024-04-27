@@ -1,0 +1,15 @@
+@font-face {
+  src: url(./assets/fonts/Redcollar.woff2) format('woff2');
+  font-family: 'Redcollar';
+}
+
+@font-face {
+  src: url(./assets/fonts/Redcollar.woff) format('woff');
+  font-family: 'TTCommons';
+}
+.root {
+  font-family: 'Redcollar';
+}
+html{
+  padding: 0;
+}
