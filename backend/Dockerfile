@@ -1,4 +1,11 @@
-FROM ubuntu:latest
-LABEL authors="Ramil"
+#
+FROM python:3.9
 
-ENTRYPOINT ["top", "-b"]
+COPY ./api /app
+
+EXPOSE 8001
+
+RUN --mount=type=cache,target=/root/.cache \
+    pip install -r /app/requirements.txt
+
+CMD ["uvicorn", "app.api_run:app", "--host", "0.0.0.0", "--port", "8001"]

@@ -17,3 +17,7 @@ services:
     build: ./frontend
     ports:
       - "8000:8000"
+  backend:
+    build: ./backend
+    ports:
+      - "8001:8001"
