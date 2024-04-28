@@ -25,7 +25,7 @@
 - [Рамиль Габдрахманов](https://github.com/Ramil2911) | Капитан команды
 - [Илья Емельянов](https://github.com/hornetio) | ML Enginneer | Backend
 - [Николай Мазицын](https://github.com/DobriyKolya) | Frontend
-- [Айнур Исмагилов](https://github.com/Hopper789) | ML Engineer, Telegram bot
+- [Айнур Исмагилов](https://github.com/Hopper789) | ML Engineer | Telegram bot
 
 ## Используемый стек и технологии
 
