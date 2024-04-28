@@ -7,6 +7,9 @@
 - Бизнес-задача: Создание систему анализа комментариев к онлайн-уроку на предмет корректности их проведения
 - Результат работы: система массовой параллельной обработки комментариев, набор метрик анализа, цифровой ассистент на основе большой языковой модели, помогающий в анализе, удобный сайт для работы с системой и телеграм-бот
 
+## Запуск решения
+**Необходим Docker**. Запуск решение производится командой ```docker-compose up -d``` в папке проекта. Сайт доступен по адресу ```localhost:8000/index```.
+
 ## Этапы работы
 
 1. Анализ данных, разработка метрик качества преподавания.
@@ -37,3 +40,4 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-000?style=for-the-badge&logo=apachekafka)
 ![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
