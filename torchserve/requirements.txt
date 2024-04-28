@@ -1,3 +1,5 @@
 transformers[torch]
 accelerate
 setuptools
+llama-cpp-python
+llama-cpp-python[server]
